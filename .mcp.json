@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "skillhook": {
+      "command": "npx",
+      "args": ["-y", "@meterapp/skillhook@0.14.2", "mcp"]
+    },
+    "skillhook-cloud": {
+      "command": "npx",
+      "args": ["-y", "@meterapp/skillhook@0.14.2", "mcp", "--cloud"]
+    }
+  }
+}
