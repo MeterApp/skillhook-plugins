@@ -21,10 +21,10 @@ organisation), and give them the link when `browser_opened` is false. Then call 
 tools appear once they approved. In a terminal the same is:
 
 ```bash
-skillhook cloud login    # opens the browser; the person approves the code, the key is kept in ~/.skillhook/.env
+skillhook cloud login    # opens the browser; the person approves the code, the key is kept in skillhook's configuration under ~/.skillhook
 ```
 
-That is Skillhook Cloud at https://skillhook.dev; only a person on another deployment adds `--url https://…` (the
+That is Skillhook Cloud at https://skillhook.dev/?ref=plugin; only a person on another deployment adds `--url https://…` (the
 setup tool's message names it when this machine uses one). The key never passes through the conversation: never ask
 the person to paste one, and never put one in a command line, a file or a commit.
 
