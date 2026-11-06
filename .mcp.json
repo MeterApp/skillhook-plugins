@@ -1,12 +1,19 @@
 {
   "mcpServers": {
     "skillhook": {
-      "command": "npx",
-      "args": ["-y", "@meterapp/skillhook@0.15.1", "mcp"]
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/server/skillhook.mjs",
+        "mcp"
+      ]
     },
     "skillhook-cloud": {
-      "command": "npx",
-      "args": ["-y", "@meterapp/skillhook@0.15.1", "mcp", "--cloud"]
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/server/skillhook.mjs",
+        "mcp",
+        "--cloud"
+      ]
     }
   }
 }
