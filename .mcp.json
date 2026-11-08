@@ -1,19 +1,8 @@
 {
   "mcpServers": {
-    "skillhook": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/server/skillhook.mjs",
-        "mcp"
-      ]
-    },
     "skillhook-cloud": {
-      "command": "node",
-      "args": [
-        "${CLAUDE_PLUGIN_ROOT}/server/skillhook.mjs",
-        "mcp",
-        "--cloud"
-      ]
+      "type": "http",
+      "url": "https://skillhook.dev/api/mcp"
     }
   }
 }

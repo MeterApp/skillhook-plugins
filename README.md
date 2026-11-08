@@ -7,8 +7,8 @@ This plugin, for Claude Code, Codex and Cursor, gives your agent:
 - `skillhook-setup`: install skillhook, expose it with Tailscale Funnel and verify a webhook end to end.
 - `skillhook-authoring`: write, test and debug the SKILL.md (or `skillhook.yaml` hook) a webhook runs.
 - `skillhook-cloud`: see and operate every machine of your Skillhook Cloud organisation.
-- Two MCP servers: `skillhook` (this machine: status, skills, secrets, jobs, exposure, signed test
-  webhooks) and `skillhook-cloud` (the organisation, as the Skillhook Cloud dashboard shows and runs it).
+- One hosted MCP server, `skillhook-cloud` (`https://skillhook.dev/api/mcp`): the organisation, as the
+  Skillhook Cloud dashboard shows and runs it.
 
 ## Install
 
@@ -19,63 +19,31 @@ Claude Code:
 /plugin install skillhook@meterapp-skillhook
 ```
 
-Codex: `codex plugin marketplace add MeterApp/skillhook-plugins`, then install `skillhook` from it. Node.js 22
-or newer is required.
+Codex: `codex plugin marketplace add MeterApp/skillhook-plugins`, then install `skillhook` from it.
 
 ## What it runs
 
-Both servers are local (stdio) and run exactly this plugin's release of the
-[`@meterapp/skillhook`](https://www.npmjs.com/package/@meterapp/skillhook) npm package, published with
-provenance from [MeterApp/skillhook](https://github.com/MeterApp/skillhook).
+Nothing on your machine. The plugin is skills and the address of one hosted server; it ships no code
+and starts no process. The skills tell your agent how to install and use the `skillhook` command line,
+which is a separate install.
 
-- **Claude Code, installed from the plugin directory or
-  [MeterApp/skillhook-plugins](https://github.com/MeterApp/skillhook-plugins):** the plugin ships a
-  `package.json` and a `package-lock.json` that pin that version and its dependencies (registry
-  sources and integrity hashes). Claude Code installs them into the plugin's `node_modules` when it
-  installs or updates the plugin, and starts `node server/skillhook.mjs mcp` and
-  `node server/skillhook.mjs mcp --cloud`, which run the installed command line.
-- **Codex, Cursor, and this source repository's marketplace:** the host starts
-  `npx -y @meterapp/skillhook@<version> mcp` and `npx -y @meterapp/skillhook@<version> mcp --cloud`
-  (`.mcp.json` in the source repository, `.mcp.npx.json` in the published plugin); the first start
-  downloads exactly that version.
-
-- **`skillhook`** reads and writes skillhook's own configuration under `~/.skillhook` on this machine
-  (settings, skills, the secrets you saved with `skillhook secret set`, jobs) and talks to the local
-  skillhook server on `127.0.0.1`. When your agent calls the matching tools it runs skills with
-  `claude`, `codex` or a shell command, sends signed test webhooks to your own server, installs the
-  background service, and turns on Tailscale Funnel (`expose`), which makes this machine's webhook
-  endpoint reachable from the internet; nothing is exposed until then, and `skillhook expose off`
-  removes it.
-- **`skillhook-cloud`** talks over HTTPS to [Skillhook Cloud](https://skillhook.dev/?ref=plugin) only.
-  Before you sign in it offers just the public pricing and checkout-link routes.
+To manage this machine through MCP as well, add skillhook's local server once the command line is
+installed: `skillhook mcp --print-config` prints the command for Claude Code, Codex and mcp.json hosts.
+The [source repository](https://github.com/MeterApp/skillhook)'s own marketplace installs the same
+skills with that server already registered.
 
 ## How sign-in works
 
-The plugin takes no option and carries no key. Its server entries are a command and arguments,
-nothing else.
-
-- The local server reads only skillhook's own configuration under `~/.skillhook` on this machine.
-- The cloud server signs in with your browser: its `skillhook_cloud_setup` tool, or `skillhook cloud
-  login` in a terminal, opens a page on skillhook.dev where you approve a code. The organisation key
-  that this sign-in saves under `~/.skillhook` is sent to `https://skillhook.dev` and nowhere else,
-  with each tool call, and acts with the rights of the person who approved it. `skillhook cloud
-  logout` removes it.
-- The plugin itself reads nothing from your shell and asks you for nothing at install.
-
-Pairing this machine with the cloud (uploading its jobs and deliveries) is separate and only starts
-when a person runs `skillhook cloud connect` in a terminal. What that link sends:
-[docs/cloud.md](https://github.com/MeterApp/skillhook/blob/main/docs/cloud.md).
+The plugin takes no option and carries no key. The host signs you in with your browser the first time
+the server is used, and acts with the rights you approved on skillhook.dev.
 
 ## Also sent
 
-- **Update check.** At most once an hour the CLI asks the npm registry for the latest version of
-  `@meterapp/skillhook`. The plugin's copy never installs anything itself; it moves to a new version
-  when the plugin updates.
-- **Nothing else.** No telemetry or analytics. Skillhook Cloud's
-  [privacy policy](https://skillhook.dev/privacy?ref=plugin) and [terms](https://skillhook.dev/terms?ref=plugin)
-  cover what reaches it.
+Tool calls go to `https://skillhook.dev` and nowhere else. No telemetry or analytics. Skillhook Cloud's
+[privacy policy](https://skillhook.dev/privacy?ref=plugin) and [terms](https://skillhook.dev/terms?ref=plugin)
+cover what reaches it.
 
 [Documentation](https://skillhook.dev/docs?ref=plugin) ·
-[Source and issues](https://github.com/MeterApp/skillhook) · [Changelog](CHANGELOG.md) · MIT licence
+[Source and issues](https://github.com/MeterApp/skillhook) · MIT licence
 
 This repository is generated from [MeterApp/skillhook](https://github.com/MeterApp/skillhook) (`plugins/skillhook/`) with `scripts/publish-plugins.mjs`. Make changes there and republish; do not edit this mirror.

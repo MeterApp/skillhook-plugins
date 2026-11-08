@@ -57,7 +57,7 @@ skillhook config set defaults.effort high         # low | medium | high | xhigh 
 skillhook config show
 ```
 
-A skill overrides these in its `skillhook:` frontmatter (`runner`, `model`, `effort`). Runs are unattended: Claude runs with `--permission-mode bypassPermissions`, Codex with the `workspace-write` sandbox plus network access. Tighten one skill with `claude: { permission_mode: acceptEdits, allowed_tools: [...] }` or `codex: { sandbox: read-only }`, or all of them under `runners.claude` / `runners.codex` in `skillhook.json`. A fast model as the default and an `opus`-class model only for skills that edit code is the usual split.
+A skill overrides these in its `skillhook:` frontmatter (`runner`, `model`, `effort`). Runs are unattended: Claude runs with `--permission-mode bypassPermissions`, Codex with the `workspace-write` sandbox plus network access. Tighten one skill with `claude: { permission_mode: acceptEdits, allowed_tools: [...] }` or `codex: { sandbox: read-only }`, or all of them under `runners.claude` / `runners.codex` in `skillhook.json`. A fast model as the default and an `opus`-class model only for skills that edit code is the usual split. If the machine has both a `claude login` and an `ANTHROPIC_API_KEY`, the key wins; `skillhook config set runners.claude.auth login` (or `api_key`) makes the choice explicit.
 
 ## 5. Run the server
 
@@ -132,7 +132,7 @@ The person copies the code (and `--control` if they chose it) from their dashboa
 
 ## The same through MCP
 
-Install the plugin (`/plugin install skillhook --marketplace MeterApp/skillhook` in Claude Code 2.1.275 or later; before that `/plugin marketplace add MeterApp/skillhook`, then `/plugin install skillhook@meterapp-skillhook`) or add the server directly — `skillhook mcp --print-config` prints the command for Claude Code, Codex and mcp.json hosts. Tools map onto the CLI:
+Install the plugin (`/plugin install skillhook --marketplace MeterApp/skillhook` in Claude Code 2.1.275 or later; before that `/plugin marketplace add MeterApp/skillhook`, then `/plugin install skillhook@meterapp-skillhook`) or add the server directly — `skillhook mcp --print-config` prints the command for Claude Code, Codex and mcp.json hosts. The copy of the plugin in Anthropic's directory has no local server, so add it that way there; the CLI below does everything without it. Tools map onto the CLI:
 
 | Task | CLI | MCP tool |
 | --- | --- | --- |

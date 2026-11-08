@@ -1,7 +1,7 @@
 {
   "name": "skillhook",
   "version": "0.15.2",
-  "description": "Turn this machine into a permanent, secure webhook endpoint that runs Agent Skills with Claude Code or Codex, and run your whole Skillhook Cloud organisation from the agent. Three skills teach the agent to install and expose skillhook, to write good webhook skills and to operate the fleet; two MCP servers manage this machine (skills, secrets, jobs, exposure) and, with an organisation API key, every machine as the Skillhook Cloud dashboard does (what needs a person, failures, stats, answers, replays, runs, hosted URLs).",
+  "description": "Turn this machine into a permanent, secure webhook endpoint that runs Agent Skills with Claude Code or Codex, and run your whole Skillhook Cloud organisation from the agent. Three skills teach the agent to install and expose skillhook, to write good webhook skills and to operate the fleet; the hosted Skillhook Cloud MCP server works every machine as the dashboard does (what needs a person, failures, stats, answers, replays, runs, hosted URLs).",
   "author": {
     "name": "Meter",
     "email": "jonathan@skillhook.dev",
@@ -23,7 +23,7 @@
     "github"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.npx.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "skillhook",
     "shortDescription": "Webhook in, agent out — on your own machine",
